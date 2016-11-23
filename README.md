@@ -50,13 +50,13 @@ If you want to run the application manually instead of using docker-compose, the
 
 1. Create a new network for the application and the database:
 
-  ```
+  ```bash
   $ docker network create redmine_network
   ```
 
 2. Start a MariaDB database in the network generated:
 
-  ```
+  ```bash
   $ docker run -d --name mariadb --net=redmine_network bitnami/mariadb
   ```
 
@@ -64,7 +64,7 @@ If you want to run the application manually instead of using docker-compose, the
 
 3. Run the Redmine container:
 
-  ```
+  ```bash
   $ docker run -d -p 80:3000 --name redmine --net=redmine_network bitnami/redmine
   ```
 
@@ -104,13 +104,13 @@ version: '2'
 
 1. Create a network (if it does not exist):
 
-  ```
+  ```bash
   $ docker network create redmine-tier
   ```
 
 2. Create a MariaDB container with host volume:
 
-  ```
+  ```bash
   $ docker run -d --name mariadb \
     --net redmine-tier \
     --volume /path/to/mariadb-persistence:/bitnami/mariadb \
@@ -121,7 +121,7 @@ version: '2'
 
 3. Run the Redmine container:
 
-  ```
+  ```bash
   $ docker run -d --name redmine -p 80:3000 \
     --net redmine-tier \
     --volume /path/to/redmine-persistence:/bitnami/redmine \
@@ -134,7 +134,7 @@ Bitnami provides up-to-date versions of MariaDB and Redmine, including security 
 
 1. Get the updated images:
 
-  ```
+  ```bash
   $ docker pull bitnami/redmine:latest
   ```
 
@@ -175,7 +175,7 @@ application:
 
  * For manual execution add a `-e` option with each variable and value:
 
-```
+```bash
  $ docker run -d -e REDMINE_PASSWORD=my_password -p 80:3000 --name redmine -v /your/local/path/bitnami/redmine:/bitnami/redmine --network=redmine_network bitnami/redmine
 ```
 
@@ -216,7 +216,7 @@ This would be an example of SMTP configuration using a GMail account:
 
  * For manual execution:
 
-```
+```bash
  $ docker run -d -e SMTP_HOST=smtp.gmail.com -e SMTP_PORT=587 -e SMTP_USER=your_email@gmail.com -e SMTP_PASSWORD=your_password -p 80:3000 --name redmine -v /your/local/path/bitnami/redmine:/bitnami/redmine --network=redmine_network bitnami/redmine$ docker rm -v redmine
 ```
 
@@ -231,7 +231,7 @@ To backup your application data follow these steps:
 
 2. Copy the Redmine data folder in the host:
 
-  ```
+  ```bash
   $ docker cp /your/local/path/bitnami:/bitnami/redmine
   ```
 
