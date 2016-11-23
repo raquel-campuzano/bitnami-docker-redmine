@@ -51,13 +51,13 @@ If you want to run the application manually instead of using docker-compose, the
 1. Create a new network for the application and the database:
 
   ```bash
-  $ docker network create redmine_network
+  $ docker network create redmine-tier
   ```
 
 2. Start a MariaDB database in the network generated:
 
   ```bash
-  $ docker run -d --name mariadb --net=redmine_network bitnami/mariadb
+  $ docker run -d --name mariadb --net=redmine-tier bitnami/mariadb
   ```
 
   *Note:* You need to give the container a name in order to Redmine to resolve the host
@@ -65,14 +65,14 @@ If you want to run the application manually instead of using docker-compose, the
 3. Run the Redmine container:
 
   ```bash
-  $ docker run -d -p 80:3000 --name redmine --net=redmine_network bitnami/redmine
+  $ docker run -d -p 80:3000 --name redmine --net=redmine-tier bitnami/redmine
   ```
 
 Then you can access your application at http://your-ip/
 
 ## Persisting your application
 
-If you remove every container and volume all your data will be lost, and the next time you run the image the application will be reinitialized. To avoid this loss of data, you should mount a volume that will persist even after the container is removed. 
+If you remove every container and volume all your data will be lost, and the next time you run the image the application will be reinitialized. To avoid this loss of data, you should mount a volume that will persist even after the container is removed.
 
 For persistence of the Redmine deployment, the above examples define docker volumes namely `mariadb_data` and `redmine_data`. The Redmine application state will persist as long as these volumes are not removed.
 
@@ -97,7 +97,7 @@ version: '2'
       - 80:3000
     volumes:
       - '/path/to/redmine-persistence:/bitnami/redmine'
-    
+
 ```
 
 ### Mount host directories as data volumes using the Docker command line
@@ -176,7 +176,7 @@ application:
  * For manual execution add a `-e` option with each variable and value:
 
 ```bash
- $ docker run -d -e REDMINE_PASSWORD=my_password -p 80:3000 --name redmine -v /your/local/path/bitnami/redmine:/bitnami/redmine --network=redmine_network bitnami/redmine
+ $ docker run -d -e REDMINE_PASSWORD=my_password -p 80:3000 --name redmine -v /your/local/path/bitnami/redmine:/bitnami/redmine --network=redmine-tier bitnami/redmine
 ```
 
 Available variables:
@@ -217,7 +217,7 @@ This would be an example of SMTP configuration using a GMail account:
  * For manual execution:
 
 ```bash
- $ docker run -d -e SMTP_HOST=smtp.gmail.com -e SMTP_PORT=587 -e SMTP_USER=your_email@gmail.com -e SMTP_PASSWORD=your_password -p 80:3000 --name redmine -v /your/local/path/bitnami/redmine:/bitnami/redmine --network=redmine_network bitnami/redmine$ docker rm -v redmine
+ $ docker run -d -e SMTP_HOST=smtp.gmail.com -e SMTP_PORT=587 -e SMTP_USER=your_email@gmail.com -e SMTP_PASSWORD=your_password -p 80:3000 --name redmine -v /your/local/path/bitnami/redmine:/bitnami/redmine --network=redmine-tier bitnami/redmine$ docker rm -v redmine
 ```
 
 # Backing up your application
